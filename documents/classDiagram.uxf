@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>470</x>
+      <y>280</y>
+      <w>230</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Movie
+-
+uuid: String
+title: String
+description: String
+presentations: Array[Presentation]
+-
+_loadMovie()_
+save()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>280</y>
+      <w>220</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Presentation
+-
+uuid: String
+time: long
+hall: Hall
+movie: Movie
+reservations: Array[Reservation]
+-
+_loadPresentation()_
+save()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1120</x>
+      <y>280</y>
+      <w>140</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Hall
+-
+uuid: String
+number: int
+seatsX: int
+seatsZ: int
+-
+_loadHall()_
+save()
+getTotalSeats()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>350</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1
+m1=1..*</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1020</x>
+      <y>350</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>540</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Reservation
+-
+uuid: String
+presentation: Presentation
+seatX: int
+seatZ: int
+-
+_loadReservation()_
+save()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>910</x>
+      <y>430</y>
+      <w>50</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+</diagram>
