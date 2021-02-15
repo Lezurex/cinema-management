@@ -31,7 +31,7 @@ save()</panel_attributes>
     <panel_attributes>Presentation
 -
 uuid: String
-time: long
+time: double
 hall: Hall
 movie: Movie
 reservations: Array[Reservation]
