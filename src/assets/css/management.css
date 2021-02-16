@@ -30,3 +30,30 @@
 main {
     padding: 2rem;
 }
+
+.add-presentation-options {
+    display: flex;
+}
+
+.add-presentation-options * {
+    flex-grow: 1;
+    margin: .5rem;
+}
+
+.add-presentation-options span:last-child {
+    width: fit-content;
+    flex-grow: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    font-weight: bold;
+    font-size: 2rem;
+    cursor: pointer;
+    padding-left: .7rem;
+}
+
+#add-presentation-list {
+    max-height: 50vh;
+    overflow-y: scroll;
+}

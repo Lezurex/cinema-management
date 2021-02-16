@@ -6,5 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="vue" level="application" />
     <orderEntry type="library" name="popper.js" level="application" />
+    <orderEntry type="library" name="date-fns" level="application" />
+    <orderEntry type="library" name="luxon" level="application" />
   </component>
 </module>

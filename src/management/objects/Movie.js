@@ -6,8 +6,16 @@ export default class Movie {
 
     constructor(uuid, title, description, presentations) {
         this.uuid = uuid;
+        this.presentations = presentations;
         this.title = title;
         this.description = description;
-        this.presentations = presentations;
+    }
+
+    setTitle(value) {
+        this.title = value;
+    }
+
+    setDescription(value) {
+        this.description = value;
     }
 }
