@@ -1,0 +1,32 @@
+#navbar {
+    background-color: var(--bs-gray);
+    padding: 1rem;
+    color: var(--bs-white);
+}
+
+#navbar ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#navbar ul li {
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: .5s;
+}
+
+#navbar ul li:hover {
+    opacity: .7;
+    transition: .5s;
+}
+
+#navbar ul li:hover:first-child {
+    opacity: 1;
+}
+
+main {
+    padding: 2rem;
+}
