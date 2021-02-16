@@ -13,7 +13,7 @@ services:
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: happy-place
+      MYSQL_DATABASE: cinema
     volumes: 
       - ./mariadb-data:/var/lib/mysql
     ports:
