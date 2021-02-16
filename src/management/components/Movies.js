@@ -38,12 +38,12 @@ export default {
               <div class="card-body">
                 <div class="add-presentation-options">
                   <form class="form-floating">
-                    <input v-model="presentation.time" type="datetime-local" :min="presentation.time" :value="presentation.time" class="form-control" placeholder="Time and date" required>
+                    <input v-model="presentation.time" :min="minDateTime" type="datetime-local" class="form-control" placeholder="Time and date" required>
                     <label for="add-title">Time and Date</label>
                   </form>
                   <div class="form-floating">
                     <select v-model="presentation.hall" class="form-select">
-                      <option v-for="hall in halls" :value="hall.uuid">Hall {{ hall.number }} ({{ hall.seatsX * hall.seatsZ }})</option>
+                      <option v-for="hall in halls" :value="hall.uuid">Hall {{ hall.number }} ({{ hall.seatsX * hall.seatsZ }} Seats)</option>
                     </select>
                     <label>Movie hall</label>
                   </div>
@@ -73,11 +73,11 @@ export default {
     },
     mounted: function () {
         this.newMovie.presentations = [];
-        this.newMovie.presentations.push(new Presentation(undefined, new DateTime.toFormat("yyyy-mm-dd\Thh:mm"), this.halls[0], this.newMovie, []))
+        this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0], this.newMovie, []))
     },
     computed: {
         minDateTime() {
-            return new Date().toISOString();
+            return new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm")
         }
     }
 

@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<script>var DateTime = luxon.DateTime;</script>
+<script>let DateTime = luxon.DateTime;</script>
 
 <div id="app">
     <navbar @changepage="changePage"></navbar>
