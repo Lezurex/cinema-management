@@ -15,7 +15,7 @@ class Movie {
     public string $description;
     public array $presentations;
 
-    private function __construct() {
+    public function __construct() {
 
     }
 
@@ -45,5 +45,27 @@ class Movie {
             return $movie;
         }
         return false;
+    }
+
+    public function save() {
+        $db = new DatabaseConnector();
+        $conn = $db->getConnection();
+        $presentationUUIDs = array();
+        foreach ($this->presentations as $presentation) {
+            array_push($presentationUUIDs, $presentation->uuid);
+        }
+        $presentationUUIDs = json_encode($presentationUUIDs);
+        $sql = "INSERT INTO movies (
+                    uuid,
+                    title,
+                    description,
+                    presentations
+                           ) VALUES (
+                              '$this->uuid',
+                              '{$this->title}',
+                              '{$this->description}',
+                              '$presentationUUIDs'
+                          )";
+        $conn->query($sql);
     }
 }

@@ -37,4 +37,24 @@ class Presentation {
         }
         return false;
     }
+
+    public function save() {
+        $db = new DatabaseConnector();
+        $conn = $db->getConnection();
+        $reservationJSON = json_encode($this->reservations);
+        $sql = "INSERT INTO presentations (
+                               uuid,
+                               time,
+                               movie,
+                               reservations,
+                               hall
+                           ) VALUES (
+                              '$this->uuid',
+                              '{$this->date->getTimestamp()}',
+                              '{$this->movie->uuid}',
+                              '$reservationJSON',
+                              '{$this->hall->uuid}'
+                          )";
+        $result = $conn->query($sql);
+    }
 }
