@@ -47,6 +47,35 @@ class Movie {
         return false;
     }
 
+    public static function getAllFromDatabase(): bool|array {
+        $db = new DatabaseConnector();
+        $conn = $db->getConnection();
+        $sql = "SELECT * FROM `movies`";
+        $result = $conn->query($sql);
+        $movies = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                extract($row);
+                $movie = new Movie();
+                $movie->uuid = $uuid;
+                $movie->title = $title;
+                $movie->description = $description;
+                $presentations = json_decode($presentations, true);
+                $movie->presentations = array();
+                foreach ($presentations as $presentationUUID) {
+                    $presentation = Presentation::fromDatabase($presentationUUID);
+                    if ($presentation != false) {
+                        array_push($movie->presentations, $presentation);
+                    }
+                }
+                $movies[] = $movie;
+            }
+            return $movies;
+
+        }
+        return false;
+    }
+
     public function save() {
         $db = new DatabaseConnector();
         $conn = $db->getConnection();

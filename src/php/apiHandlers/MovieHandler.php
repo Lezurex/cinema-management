@@ -45,7 +45,7 @@ class MovieHandler extends APIHandler {
             $movie = Movie::fromDatabase($uuid);
             print json_encode(array('data' => array($movie)));
         } else {
-
+            print json_encode(array('data' => Movie::getAllFromDatabase()));
         }
     }
 
