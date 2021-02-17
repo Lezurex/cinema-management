@@ -25,6 +25,14 @@ switch ($requestParts[1]) {
     case "halls":
         $handler = new HallHandler();
         break;
+    default:
+        $handler = null;
+        break;
 }
-
-$handler->handle($requestParts);
+if ($handler !== null)
+    $handler->handle($requestParts);
+else {
+    print json_encode(array(
+        "version" => "1.0.0"
+    ));
+}
