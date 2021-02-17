@@ -51,6 +51,7 @@ class MovieHandler extends APIHandler {
 
     private function handlePost($requestParts) {
         $data = json_decode(file_get_contents('php://input'), true)['data'];
+        $newMovies = array();
         foreach ($data as $movieData) {
             $uuid = uniqid("mov", true);
             $movie = new Movie();
@@ -71,7 +72,9 @@ class MovieHandler extends APIHandler {
             foreach ($movie->presentations as $presentation) {
                 $presentation->save();
             }
+            $newMovies[] = $movie;
         }
+        print json_encode(array('data' => $newMovies));
 
     }
 

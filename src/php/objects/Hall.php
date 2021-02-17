@@ -34,4 +34,45 @@ class Hall {
         }
         return false;
     }
+
+    public static function getAllFromDatabase(): bool|array {
+        $db = new DatabaseConnector();
+        $conn = $db->getConnection();
+        $sql = "SELECT * FROM `halls`";
+        $result = $conn->query($sql);
+        $halls = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                extract($row);
+                $hall = new Hall();
+                $hall->uuid = $uuid;
+                $hall->number = $number;
+                $hall->seatsX = $seatsX;
+                $hall->seatsZ = $seatsZ;
+
+                $halls[] = $hall;
+            }
+            return $halls;
+
+        }
+        return false;
+    }
+
+    public function save() {
+        $db = new DatabaseConnector();
+        $conn = $db->getConnection();
+
+        $sql = "INSERT INTO halls (
+                    uuid,
+                    number,
+                    seatsX,
+                    seatsZ
+                           ) VALUES (
+                              '{$this->uuid}',
+                              '{$this->number}',
+                              '{$this->seatsX}',
+                              '{$this->seatsZ}'
+                          )";
+        $conn->query($sql);
+    }
 }

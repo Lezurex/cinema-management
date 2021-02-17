@@ -104,7 +104,7 @@ export default {
             }
         }
     },
-    mounted: function () {
+    created: function () {
         this.newMovie.presentations = [];
         this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
     },

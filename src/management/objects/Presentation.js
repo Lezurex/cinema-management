@@ -13,14 +13,23 @@ export default class Presentation {
         this.reservations = reservations;
     }
     
-    toJSON() {
+    toJSON(component = null) {
+        if (component !== null) {
+            let halls = component.halls;
+            halls.forEach(hall => {
+                if (hall.uuid === this.hall) {
+                    this.hall = hall;
+                }
+            })
+        }
         let json = {
             "uuid": this.uuid,
-            "date": this.date.toMillis() / 1000,
+            "date": DateTime.fromString(this.date, "yyyy-LL-dd'T'HH:mm").toMillis() / 1000,
             "hall": this.hall.uuid,
             "movie": this.movie.uuid,
             "reservations": this.movie.reservations
-        }
+        };
+        console.log(json);
         return json;
     }
 }

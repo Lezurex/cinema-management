@@ -24,7 +24,7 @@
 
 <div id="app">
     <navbar @changepage="changePage"></navbar>
-    <container :page="page" :movies="movies" :halls="halls"></container>
+    <container v-if="halls !== null" :page="page" :movies="movies" :halls="halls"></container>
 </div>
 
 <!--Import App-->

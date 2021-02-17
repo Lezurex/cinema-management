@@ -6,33 +6,42 @@ import Hall from "./objects/Hall.js";
 import navbar from "./components/Navbar.js";
 import container from './components/Container.js';
 import movies from './components/Movies.js';
+import halls from './components/Halls.js';
+
 
 const app = Vue.createApp({
     data() {
         return {
             page: "MOVIES",
-            halls: [
-                new Hall("a", 1, 10, 10),
-                new Hall("a", 2, 12, 12)
-            ],
-            movies: [
-                new Movie("a", "Test Movie", "Lorem ipsum dolor sit amet", [
-                    new Presentation("a", 12780000, new Hall("a", 1, 10, 10), this, [
-                        new Reservation("a", this, 1, 1)
-                    ])
-                ])
-            ]
+            halls: null,
+            movies: []
         }
     },
     methods: {
         changePage(page) {
             this.page = page;
         }
+    },
+    mounted: function () {
+        // get Halls
+        let that = this;
+        let request = new XMLHttpRequest();
+        request.open("GET", window.location.origin + "/api/halls");
+        request.addEventListener("load", function (event) {
+            that.halls = [];
+            let json = JSON.parse(request.responseText);
+            json.data.forEach(hallObject => {
+                let hall = new Hall(hallObject.uuid, hallObject.number, hallObject.seatsX, hallObject.seatsZ);
+                that.halls.push(hall);
+            })
+        })
+        request.send();
     }
 });
 
 app.component("navbar", navbar);
 app.component("container", container);
 app.component("movies", movies);
+app.component("halls", halls);
 
 const mountedApp = app.mount("#app");
