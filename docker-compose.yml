@@ -6,7 +6,7 @@ services:
     volumes:
       - ./src:/app
       - ./php/php.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
-  
+
   db:
     image: mariadb
     environment:
