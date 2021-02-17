@@ -46,7 +46,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: red;
+    color: var(--bs-danger);
     font-weight: bold;
     font-size: 2rem;
     cursor: pointer;
@@ -56,4 +56,12 @@ main {
 #add-presentation-list {
     max-height: 50vh;
     overflow-y: scroll;
+}
+
+.error-msg {
+    color: var(--bs-danger);
+}
+
+.error-msg p {
+    margin-bottom: .2rem;
 }

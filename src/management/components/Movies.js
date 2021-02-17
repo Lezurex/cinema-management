@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             newMovie: new Movie(),
+            addErrorMsg: ""
         }
     },
     template: `
@@ -21,13 +22,13 @@ export default {
         </div>
         <div class="card-body">
           <form class="form-floating">
-            <input @keypress="updateNewMovie" type="text" class="form-control" id="add-title" placeholder="Movie title"
+            <input v-model="newMovie.title" type="text" class="form-control" id="add-title" placeholder="Movie title"
                    required>
             <label for="add-title">Movie title</label>
           </form>
           <br>
           <div class="form-floating">
-            <textarea @keypress="updateNewMovie" maxlength="1000" class="form-control" placeholder="Description"
+            <textarea v-model="newMovie.description" maxlength="1000" class="form-control" placeholder="Description"
                       id="add-description"
                       style="height: 100px"></textarea>
             <label for="add-description">Movie description</label>
@@ -53,27 +54,59 @@ export default {
             </div>
           </div>
           <br>
-          <button @click="newPresentation" class="btn btn-success">Add presentation</button>
+          <div class="d-flex justify-content-between">
+            <button @click="newPresentation" class="btn btn-success">&plus; Add presentation</button>
+            <button @click="submitNewMovie" class="btn btn-success">&plus; Add new movie</button>
+          </div>
+          <br>
+          <div class="error-msg" v-html="addErrorMsg" v-if="addErrorMsg !== ''"></div>
+          
         </div>
 
       </div>
       </main>`,
     methods: {
-        updateNewMovie() {
-            this.newMovie.setTitle(document.getElementById("add-title").value);
-            this.newMovie.setDescription(document.getElementById("add-description").value);
-        },
         newPresentation() {
-            this.newMovie.presentations.push(new Presentation(undefined, new Date().toISOString().substr(0, 16) + "Z", this.halls[0], this.newMovie, []))
+            this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
         },
         removePresentation(presentation) {
             let index = this.newMovie.presentations.indexOf(presentation);
             this.newMovie.presentations.splice(index, 1);
+        },
+        submitNewMovie() {
+            let title = document.getElementById("add-title");
+            let description = document.getElementById("add-description");
+
+            title.classList.remove("is-invalid");
+            description.classList.remove("is-invalid");
+
+            this.addErrorMsg = "";
+            let valid = true;
+            if (this.newMovie.title === "" || this.newMovie.title === undefined) {
+                this.addErrorMsg += "<p>The title field is empty!</p>";
+                valid = false;
+                title.classList.add("is-invalid");
+            }
+            if (this.newMovie.description === "" || this.newMovie.description === undefined) {
+                this.addErrorMsg += "<p>The description field is empty!</p>";
+                valid = false;
+                description.classList.add("is-invalid");
+            }
+            this.newMovie.presentations.forEach(presentation => {
+                if (presentation.hall === null) {
+                    this.addErrorMsg += "<p>Some presentation fields are empty!</p>";
+                    valid = false;
+                }
+            });
+
+            if (valid) {
+
+            }
         }
     },
     mounted: function () {
         this.newMovie.presentations = [];
-        this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0], this.newMovie, []))
+        this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
     },
     computed: {
         minDateTime() {

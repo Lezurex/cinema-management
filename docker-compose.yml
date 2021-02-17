@@ -1,13 +1,11 @@
 version: "3.6"
 
 services: 
-  app:
-    build: ./php-8
-    volumes: 
-      - ./src:/var/www/html
-    command: "php -S 0.0.0.0:8000 -t /var/www/html"
-    ports: 
-      - "8000:8000"
+  php:
+    image: bitnami/php-fpm:8.0
+    volumes:
+      - ./src:/app
+      - ./php/php.ini:/opt/bitnami/php/etc/conf.d/php.ini:ro
   
   db:
     image: mariadb
@@ -25,3 +23,14 @@ services:
       - 8080:80
     environment:
       - PMA_ARBITRARY=1
+
+  apache:
+    image: bitnami/apache:2.4
+    depends_on:
+      - php
+    volumes:
+      - ./src:/app
+      - ./apache/my_vhost.conf:/vhosts/myapp.conf:ro
+      - ./apache/certs:/certs
+    ports:
+    - "8000:8080"
