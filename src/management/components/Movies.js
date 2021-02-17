@@ -100,7 +100,7 @@ export default {
             });
 
             if (valid) {
-
+                this.newMovie.postToAPI(this);
             }
         }
     },
