@@ -30,10 +30,11 @@
 #movies-overview {
     display: flex;
     padding: 2rem;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-wrap: wrap;
 }
 
 .movie-card {
     max-width: 30vw;
+    margin: 1rem;
 }

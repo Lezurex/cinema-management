@@ -8,6 +8,7 @@ require_once __DIR__ . "/../objects/Hall.php";
 require_once __DIR__ . "/../objects/Movie.php";
 
 
+use Cassandra\Date;
 use Database\DatabaseConnector;
 use DateTime;
 
@@ -18,7 +19,7 @@ class Presentation {
     public Movie $movie;
     public array $reservations;
 
-    public static function fromDatabase($uuid): Presentation|false {
+    public static function fromDatabase($uuid, $movieUUID): Presentation|false {
         $db = new DatabaseConnector();
         $conn = $db->getConnection();
         $sql = "SELECT * FROM `presentations` WHERE uuid = '$uuid'";
@@ -33,6 +34,8 @@ class Presentation {
             $presentation->uuid = $uuid;
             $presentation->reservations = json_decode($reservations);
             $presentation->hall = Hall::fromDatabase($hall);
+            $presentation->date = new DateTime();
+            $presentation->date->setTimestamp($time);
             return $presentation;
         }
         return false;
@@ -59,10 +62,14 @@ class Presentation {
     }
 
     public function toArray() {
+        $movie = "";
+        if (isset($this->movie)) {
+            $movie = $this->movie;
+        }
         return array(
             "uuid" => $this->uuid,
-            "time" => $this->date->getTimestamp(),
-            "movie" => $this->movie->uuid,
+            "date" => $this->date->getTimestamp(),
+            "movie" => $movie,
             "reservations" => $this->reservations,
             "hall" => $this->hall
         );

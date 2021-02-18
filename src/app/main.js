@@ -9,12 +9,14 @@ const app = Vue.createApp({
         return {
             dataLoaded: false,
             movies: [],
-            halls: []
+            halls: [],
+            currentMovie: null
         }
     },
     template: `
         <top v-if="dataLoaded"></top>
         <movieOverview :movies="movies"></movieOverview>
+        <movieDetails :currentMovie="currentMovie"></movieDetails>
     `,
     methods: {
 
@@ -44,7 +46,7 @@ const app = Vue.createApp({
                                     presentationHall = hall;
                                 }
                             })
-                            presentations.push(new Presentation(presentationData.uuid, DateTime.fromMillis(presentationData.date * 1000)), presentationHall, undefined, [])
+                            presentations.push(new Presentation(presentationData.uuid, DateTime.fromSeconds(presentationData.date) , presentationHall, undefined, []))
                         });
                         let newMovie = new Movie(movieData.uuid, movieData.title, movieData.description, presentations)
                         that.movies.push(newMovie);

@@ -63,9 +63,11 @@ class Movie {
                 $presentations = json_decode($presentations, true);
                 $movie->presentations = array();
                 foreach ($presentations as $presentationUUID) {
-                    $presentation = Presentation::fromDatabase($presentationUUID);
+                    $presentation = Presentation::fromDatabase($presentationUUID, $uuid);
                     if ($presentation != false) {
-                        array_push($movie->presentations, $presentation);
+                        $array = $presentation->toArray();
+                        $array['uuid'] = $uuid;
+                        array_push($movie->presentations, $array);
                     }
                 }
                 $movies[] = $movie;

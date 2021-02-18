@@ -19,9 +19,10 @@ export default {
             <strong>Presentations:</strong>
             <ul>
               <li v-for="presentation in getNextPresentations(movie)">
-                {{ getFormattedTime(presentation.date) }}
+                {{ presentation.date.toLocaleString() + " at " + presentation.date.toFormat("HH:mm")}}
               </li>
             </ul>
+            <button @click="openMovie(movie)" class="btn btn-primary">More details</button>
           </div>
         </div>
       </div>
@@ -37,7 +38,9 @@ export default {
             const maxCount = 5;
             let count = 0;
             let nextPresentations = []
-            for (const presentation in movie.presentations) {
+            console.log(movie)
+            for (let presentationIndex in movie.presentations) {
+                let presentation = movie.presentations[presentationIndex];
                 count++;
                 if (count >= maxCount) {
                     break;
@@ -48,6 +51,9 @@ export default {
         },
         getFormattedTime(unix) {
             return DateTime.fromMillis(unix * 1000).toLocaleString();
+        },
+        openMovie(movie) {
+            this.$emit("openmovie", movie);
         }
     },
     mounted: function () {
