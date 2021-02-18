@@ -14,17 +14,22 @@ export default {
         <p>Movie hall: Hall {{currentPresentation.hall.number.toString()}}</p>
         <p class="text-center">Screen is here:</p>
         <hr class="screen-hr">
-        <table class="table">
+        <table class="table align-middle" v-if="currentPresentation.reservations" id="reservation-table">
           <thead>
             
           </thead>
           <tbody>
             <tr>
               <th class="table-secondary">Seats</th>
-              <th class="table-secondary" v-for="c in currentPresentation.hall.seatsX">{{c}}</th>
+              <th class="table-secondary" v-for="x in currentPresentation.hall.seatsX">{{x}}</th>
             </tr>
-            <tr v-for="r in currentPresentation.hall.seatsZ">
-              <th class="table-secondary">{{r}}</th>
+            <tr v-for="z in currentPresentation.hall.seatsZ">
+              <th class="table-secondary">{{z}}</th>
+              <td class="td-no-padding" v-for="x in currentPresentation.hall.seatsX">
+                <div v-if="getSeatStatus(x, z)" class="seat-free">Free</div>
+                <div v-else class="seat-occupied">Reserved</div>
+
+              </td>
             </tr>
           </tbody>
         </table>
@@ -33,6 +38,15 @@ export default {
     methods: {
         back() {
             this.$emit("back");
+        },
+        getSeatStatus(x, z) {
+            let match = false;
+            this.currentPresentation.reservations.forEach(reservation => {
+                if (reservation.seatX === x && reservation.seatZ === z) {
+                    match = true;
+                }
+            })
+            return !match;
         }
     },
     mounted: function () {

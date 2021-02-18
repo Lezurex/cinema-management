@@ -2,9 +2,11 @@
 
 require_once '../php/apiHandlers/MovieHandler.php';
 require_once '../php/apiHandlers/HallHandler.php';
+require_once '../php/apiHandlers/ReservationHandler.php';
 
 use APIHandlers\HallHandler;
 use APIHandlers\MovieHandler;
+use APIHandlers\ReservationHandler;
 
 header("content-type: application/json");
 
@@ -21,6 +23,7 @@ switch ($requestParts[1]) {
         $handler = new MovieHandler();
         break;
     case "reservations":
+        $handler = new ReservationHandler();
         break;
     case "halls":
         $handler = new HallHandler();

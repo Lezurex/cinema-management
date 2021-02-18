@@ -5,6 +5,7 @@ import Presentation from "./objects/Presentation.js";
 import Hall from "./objects/Hall.js";
 import MovieDetails from "./components/MovieDetails.js";
 import PresentationDetails from "./components/PresentationDetails.js";
+import Reservation from "./objects/Reservation.js";
 
 const app = Vue.createApp({
     data() {
@@ -29,8 +30,21 @@ const app = Vue.createApp({
             this.currentPage = "MOVIEDETAILS";
         },
         reserveSeat(presentation) {
-            this.currentPresentaion = presentation;
-            this.currentPage = "PRESENTATION";
+            let that = this;
+            let request = new XMLHttpRequest();
+            request.open("GET", window.location.origin + "/api/reservations/fromPresentation/" + presentation.uuid);
+            request.addEventListener("load", function () {
+                let data = JSON.parse(request.responseText).data;
+                presentation.reservations = [];
+                data.forEach(reservationData => {
+                    let newReservation = new Reservation(reservationData.uuid, presentation, reservationData.seatX, reservationData.seatZ);
+                    presentation.reservations.push(newReservation);
+                })
+
+                that.currentPresentaion = presentation;
+                that.currentPage = "PRESENTATION";
+            })
+            request.send();
         },
         backToMovie() {
             this.currentPage = "MOVIEDETAILS";

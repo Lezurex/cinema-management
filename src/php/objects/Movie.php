@@ -66,7 +66,7 @@ class Movie {
                     $presentation = Presentation::fromDatabase($presentationUUID, $uuid);
                     if ($presentation != false) {
                         $array = $presentation->toArray();
-                        $array['uuid'] = $uuid;
+                        $array['movie'] = $uuid;
                         array_push($movie->presentations, $array);
                     }
                 }
