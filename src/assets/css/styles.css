@@ -1,0 +1,39 @@
+#header {
+    background-color: var(--bs-gray);
+    padding: 1rem;
+    color: var(--bs-white);
+}
+
+#header ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#header ul li {
+    margin-right: 1rem;
+    cursor: pointer;
+    transition: .5s;
+}
+
+#header ul li:hover {
+    opacity: .7;
+    transition: .5s;
+}
+
+#header ul li:hover:first-child {
+    opacity: 1;
+}
+
+#movies-overview {
+    display: flex;
+    padding: 2rem;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.movie-card {
+    max-width: 30vw;
+}

@@ -97,4 +97,18 @@ class Movie {
                           )";
         $conn->query($sql);
     }
+
+    public function toArray() {
+        $presentations = array();
+        foreach ($this->presentations as $presentation) {
+            $presentations[] = $presentation->toArray();
+        }
+        $this->presentations = $presentations;
+        return array(
+            "uuid" => $this->uuid,
+            "title" => $this->title,
+            "description" => $this->description,
+            "presentations" => $presentations
+        );
+    }
 }

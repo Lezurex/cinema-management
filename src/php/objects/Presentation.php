@@ -57,4 +57,14 @@ class Presentation {
                           )";
         $result = $conn->query($sql);
     }
+
+    public function toArray() {
+        return array(
+            "uuid" => $this->uuid,
+            "time" => $this->date->getTimestamp(),
+            "movie" => $this->movie->uuid,
+            "reservations" => $this->reservations,
+            "hall" => $this->hall
+        );
+    }
 }

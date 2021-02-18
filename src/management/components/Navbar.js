@@ -6,7 +6,7 @@ export default {
         }
     },
     template: `
-      <div id="navbar">
+      <div id="header">
       <ul>
         <li><b>Cinema Management</b></li>
         <li v-for="element in elements" v-on:click="changePage(elements.indexOf(element))">

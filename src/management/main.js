@@ -1,7 +1,7 @@
-import Movie from "./objects/Movie.js";
-import Presentation from "./objects/Presentation.js";
-import Reservation from "./objects/Reservation.js";
-import Hall from "./objects/Hall.js";
+import Movie from "../app/objects/Movie.js";
+import Presentation from "../app/objects/Presentation.js";
+import Reservation from "../app/objects/Reservation.js";
+import Hall from "../app/objects/Hall.js";
 
 import navbar from "./components/Navbar.js";
 import container from './components/Container.js';
@@ -30,10 +30,12 @@ const app = Vue.createApp({
         request.addEventListener("load", function (event) {
             that.halls = [];
             let json = JSON.parse(request.responseText);
-            json.data.forEach(hallObject => {
-                let hall = new Hall(hallObject.uuid, hallObject.number, hallObject.seatsX, hallObject.seatsZ);
-                that.halls.push(hall);
-            })
+            if (json.data.length > 0) {
+                json.data.forEach(hallObject => {
+                    let hall = new Hall(hallObject.uuid, hallObject.number, hallObject.seatsX, hallObject.seatsZ);
+                    that.halls.push(hall);
+                });
+            }
         })
         request.send();
     }

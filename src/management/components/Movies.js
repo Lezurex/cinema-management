@@ -1,5 +1,5 @@
-import Movie from "../objects/Movie.js";
-import Presentation from "../objects/Presentation.js";
+import Movie from "../../app/objects/Movie.js";
+import Presentation from "../../app/objects/Presentation.js";
 
 export default {
     props: {
@@ -37,9 +37,10 @@ export default {
           <div id="add-presentation-list">
             <div v-for="presentation in newMovie.presentations" class="card">
               <div class="card-body">
+                <div class="error-msg" v-if="halls.length === 0">Please first add at least one hall to your cinema!</div>
                 <div class="add-presentation-options">
                   <form class="form-floating">
-                    <input v-model="presentation.time" :min="minDateTime" type="datetime-local" class="form-control" placeholder="Time and date" required>
+                    <input v-model="presentation.date" :min="minDateTime" type="datetime-local" class="form-control" placeholder="Time and date" required>
                     <label for="add-title">Time and Date</label>
                   </form>
                   <div class="form-floating">
@@ -67,7 +68,11 @@ export default {
       </main>`,
     methods: {
         newPresentation() {
-            this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
+            if (this.halls.length > 0) {
+                this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
+            } else {
+                this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), undefined, this.newMovie, []))
+            }
         },
         removePresentation(presentation) {
             let index = this.newMovie.presentations.indexOf(presentation);
@@ -93,7 +98,7 @@ export default {
                 description.classList.add("is-invalid");
             }
             this.newMovie.presentations.forEach(presentation => {
-                if (presentation.hall === null) {
+                if (presentation.hall === undefined) {
                     this.addErrorMsg += "<p>Some presentation fields are empty!</p>";
                     valid = false;
                 }
@@ -106,7 +111,9 @@ export default {
     },
     created: function () {
         this.newMovie.presentations = [];
-        this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
+        if (this.halls.length > 0) {
+            this.newMovie.presentations.push(new Presentation(undefined, new DateTime.now().toFormat("yyyy-LL-dd'T'HH:mm"), this.halls[0].uuid, this.newMovie, []))
+        }
     },
     computed: {
         minDateTime() {

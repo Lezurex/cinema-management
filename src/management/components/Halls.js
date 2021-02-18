@@ -1,6 +1,6 @@
-import Movie from "../objects/Movie.js";
-import Presentation from "../objects/Presentation.js";
-import Hall from "../objects/Hall.js";
+import Movie from "../../app/objects/Movie.js";
+import Presentation from "../../app/objects/Presentation.js";
+import Hall from "../../app/objects/Hall.js";
 
 export default {
     props: {

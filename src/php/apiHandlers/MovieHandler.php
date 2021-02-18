@@ -64,7 +64,8 @@ class MovieHandler extends APIHandler {
                 $presentation->uuid = uniqid("pre", true);
                 $presentation->movie = $movie;
                 $presentation->hall = Hall::fromDatabase($presentationData['hall']);
-                $presentation->date = new DateTime($presentationData['date']);
+                $presentation->date = new DateTime();
+                $presentation->date->setTimestamp($presentationData['date']);
                 $presentation->reservations = array();
                 array_push($movie->presentations, $presentation);
             }
@@ -74,8 +75,11 @@ class MovieHandler extends APIHandler {
             }
             $newMovies[] = $movie;
         }
-        print json_encode(array('data' => $newMovies));
-
+        $json = array();
+        foreach ($newMovies as $newMovie) {
+            $json[] = $newMovie->toArray();
+        }
+        print json_encode(array('data' => $json));
     }
 
     private function handlePut($requestParts) {
