@@ -34,7 +34,22 @@
     flex-wrap: wrap;
 }
 
+.content {
+    padding: 2rem;
+}
+
 .movie-card {
     max-width: 30vw;
     margin: 1rem;
+}
+
+.movie-card .card-footer {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.screen-hr {
+    width: 50vw;
+    margin: 1rem auto;
+    border-bottom: rgba(0,0,0,0.5) solid;
 }

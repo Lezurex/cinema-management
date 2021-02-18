@@ -3,23 +3,38 @@ import MovieOverview from './components/MovieOverview.js'
 import Movie from "./objects/Movie.js";
 import Presentation from "./objects/Presentation.js";
 import Hall from "./objects/Hall.js";
+import MovieDetails from "./components/MovieDetails.js";
+import PresentationDetails from "./components/PresentationDetails.js";
 
 const app = Vue.createApp({
     data() {
         return {
+            currentPage: "OVERVIEW",
             dataLoaded: false,
             movies: [],
             halls: [],
-            currentMovie: null
+            currentMovie: null,
+            currentPresentaion: null
         }
     },
     template: `
         <top v-if="dataLoaded"></top>
-        <movieOverview :movies="movies"></movieOverview>
-        <movieDetails :currentMovie="currentMovie"></movieDetails>
+        <movieOverview v-if="currentPage === 'OVERVIEW'" @openmovie="openMovie" :movies="movies"></movieOverview>
+        <movieDetails @reserveseat="reserveSeat" @back="currentPage = 'OVERVIEW'" v-if="currentPage === 'MOVIEDETAILS'" :currentMovie="currentMovie"></movieDetails>
+        <presentationDetails @back="backToMovie" :currentMovie="currentMovie" :currentPresentation="currentPresentaion" v-if="currentPage === 'PRESENTATION'"></presentationDetails>
     `,
     methods: {
-
+        openMovie(movie) {
+            this.currentMovie = movie;
+            this.currentPage = "MOVIEDETAILS";
+        },
+        reserveSeat(presentation) {
+            this.currentPresentaion = presentation;
+            this.currentPage = "PRESENTATION";
+        },
+        backToMovie() {
+            this.currentPage = "MOVIEDETAILS";
+        }
     },
     mounted: function () {
         var that = this;
@@ -64,5 +79,7 @@ const app = Vue.createApp({
 
 app.component("top", Header)
 app.component("movieOverview", MovieOverview)
+app.component("movieDetails", MovieDetails)
+app.component("presentationDetails", PresentationDetails)
 
 const mountedApp = app.mount("#app");

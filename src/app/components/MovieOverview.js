@@ -5,28 +5,28 @@ export default {
         movies: Array
     },
     data() {
-        return {
-
-        }
+        return {}
     },
     template: `
-    <div id="movies-overview">
+      <div id="movies-overview">
       <div class="card movie-card" v-for="movie in movies">
         <div class="card-body">
-          <h5 class="card-title">{{movie.title}}</h5>
-          <p class="card-text">{{truncateString(movie.description, 100)}}</p>
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text">{{ truncateString(movie.description, 200) }}</p>
           <div class="card-text">
             <strong>Presentations:</strong>
             <ul>
               <li v-for="presentation in getNextPresentations(movie)">
-                {{ presentation.date.toLocaleString() + " at " + presentation.date.toFormat("HH:mm")}}
+                {{ presentation.date.toLocaleString() + " at " + presentation.date.toFormat("HH:mm") }}
               </li>
             </ul>
-            <button @click="openMovie(movie)" class="btn btn-primary">More details</button>
           </div>
         </div>
+        <div class="card-footer">
+          <button @click="openMovie(movie)" class="btn btn-primary">More details</button>
+        </div>
       </div>
-    </div>
+      </div>
     `,
     methods: {
         truncateString(str, numChars) {
