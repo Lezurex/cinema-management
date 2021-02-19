@@ -7,6 +7,7 @@ require_once __DIR__ . '/../objects/Presentation.php';
 
 
 use Database\DatabaseConnector;
+use JetBrains\PhpStorm\ArrayShape;
 use Objects\Presentation;
 
 class Movie {
@@ -86,7 +87,7 @@ class Movie {
             array_push($presentationUUIDs, $presentation->uuid);
         }
         $presentationUUIDs = json_encode($presentationUUIDs);
-        $sql = "INSERT INTO movies (
+        $sql = "INSERT INTO `movies` (
                     uuid,
                     title,
                     description,
@@ -100,7 +101,8 @@ class Movie {
         $conn->query($sql);
     }
 
-    public function toArray() {
+    #[ArrayShape(["uuid" => "string", "title" => "string", "description" => "string", "presentations" => "array"])]
+    public function toArray(): array {
         $presentations = array();
         foreach ($this->presentations as $presentation) {
             $presentations[] = $presentation->toArray();

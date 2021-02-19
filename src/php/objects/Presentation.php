@@ -6,11 +6,13 @@ namespace Objects;
 require_once __DIR__ . "/../database/DatabaseConnector.php";
 require_once __DIR__ . "/../objects/Hall.php";
 require_once __DIR__ . "/../objects/Movie.php";
+require_once __DIR__ . "/../objects/Reservation.php";
 
 
 use Cassandra\Date;
 use Database\DatabaseConnector;
 use DateTime;
+use Objects\Reservation;
 
 class Presentation {
     public string $uuid;
@@ -64,13 +66,17 @@ class Presentation {
     public function toArray() {
         $movie = "";
         if (isset($this->movie)) {
-            $movie = $this->movie;
+            $movie = $this->movie->uuid;
+        }
+        $reservations = array();
+        foreach ($this->reservations as $reservation) {
+            $reservations[] = $reservation->toArray();
         }
         return array(
             "uuid" => $this->uuid,
             "date" => $this->date->getTimestamp(),
             "movie" => $movie,
-            "reservations" => $this->reservations,
+            "reservations" => $reservations,
             "hall" => $this->hall
         );
     }
