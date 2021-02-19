@@ -69,3 +69,12 @@ main {
 .error-msg p {
     margin-bottom: .2rem;
 }
+
+.movie-list-element-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-list-element-body {
+    margin-top: 1rem;
+}

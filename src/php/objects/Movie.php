@@ -76,7 +76,7 @@ class Movie {
             return $movies;
 
         }
-        return false;
+        return array();
     }
 
     public function save() {

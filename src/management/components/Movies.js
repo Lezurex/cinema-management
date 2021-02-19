@@ -37,15 +37,19 @@ export default {
           <div id="add-presentation-list">
             <div v-for="presentation in newMovie.presentations" class="card">
               <div class="card-body">
-                <div class="error-msg" v-if="halls.length === 0">Please first add at least one hall to your cinema!</div>
+                <div class="error-msg" v-if="halls.length === 0">Please first add at least one hall to your cinema!
+                </div>
                 <div class="add-presentation-options">
                   <form class="form-floating">
-                    <input v-model="presentation.date" :min="minDateTime" type="datetime-local" class="form-control" placeholder="Time and date" required>
+                    <input v-model="presentation.date" :min="minDateTime" type="datetime-local" class="form-control"
+                           placeholder="Time and date" required>
                     <label for="add-title">Time and Date</label>
                   </form>
                   <div class="form-floating">
                     <select v-model="presentation.hall" class="form-select">
-                      <option v-for="hall in halls" :value="hall.uuid">Hall {{ hall.number }} ({{ hall.seatsX * hall.seatsZ }} Seats)</option>
+                      <option v-for="hall in halls" :value="hall.uuid">Hall {{ hall.number }} (
+                        {{ hall.seatsX * hall.seatsZ }} Seats)
+                      </option>
                     </select>
                     <label>Movie hall</label>
                   </div>
@@ -61,9 +65,24 @@ export default {
           </div>
           <br>
           <div class="error-msg" v-html="addErrorMsg" v-if="addErrorMsg !== ''"></div>
-          
+
         </div>
 
+      </div>
+      <br><br>
+      <div class="card">
+        <div class="card-header">
+          Manage existing movies
+        </div>
+        <div class="card-body">
+          <table v-if="movies.length > 0" class="table">
+            <tbody>
+              <tr v-for="movie in movies">
+                <td><movieListElement :halls="halls" :movie="movie"></movieListElement></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       </main>`,
     methods: {

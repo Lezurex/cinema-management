@@ -13,13 +13,16 @@ export default {
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
           <p class="card-text">{{ truncateString(movie.description, 200) }}</p>
-          <div class="card-text">
+          <div v-if="movie.presentations.length > 0" class="card-text">
             <strong>Presentations:</strong>
             <ul>
               <li v-for="presentation in getNextPresentations(movie)">
                 {{ presentation.date.toLocaleString() + " at " + presentation.date.toFormat("HH:mm") }}
               </li>
             </ul>
+          </div>
+          <div v-else class="card-text">
+            <p>No presentations scheduled yet.</p>
           </div>
         </div>
         <div class="card-footer">
@@ -30,8 +33,13 @@ export default {
     `,
     methods: {
         truncateString(str, numChars) {
-            str = str.slice(0, numChars) + "...";
-            console.log(str);
+            if (str.length > numChars) {
+                str = str.slice(0, numChars);
+                if (str.substr(str.length - 1, 1) === " ") {
+                    str = str.substr(0, str.length - 1);
+                }
+                str += "...";
+            }
             return str;
         },
         getNextPresentations(movie) {

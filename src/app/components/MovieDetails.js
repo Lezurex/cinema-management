@@ -14,7 +14,7 @@ export default {
       <h1>{{ currentMovie.title }}</h1>
       <p>{{ currentMovie.description }}</p>
       <h3>Presentations</h3>
-      <table class="table table-white table-striped align-middle">
+      <table v-if="currentMovie.presentations.length > 0" class="table table-white table-striped align-middle">
         <thead>
           <tr>
             <th>Date</th>
@@ -32,6 +32,7 @@ export default {
           </tr>
         </tbody>
       </table>
+      <p v-else>No presentations scheduled yet.</p>
       </div>
     `,
     methods: {

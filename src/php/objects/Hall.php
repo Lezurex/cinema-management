@@ -55,7 +55,7 @@ class Hall {
             return $halls;
 
         }
-        return false;
+        return array();
     }
 
     public function save() {
