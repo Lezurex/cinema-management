@@ -22,7 +22,7 @@ const app = Vue.createApp({
         <top v-if="dataLoaded"></top>
         <movieOverview v-if="currentPage === 'OVERVIEW'" @openmovie="openMovie" :movies="movies"></movieOverview>
         <movieDetails @reserveseat="reserveSeat" @back="currentPage = 'OVERVIEW'" v-if="currentPage === 'MOVIEDETAILS'" :currentMovie="currentMovie"></movieDetails>
-        <presentationDetails @back="backToMovie" :currentMovie="currentMovie" :currentPresentation="currentPresentaion" v-if="currentPage === 'PRESENTATION'"></presentationDetails>
+        <presentationDetails @reserveseat="reserveSeat" @back="backToMovie" :currentMovie="currentMovie" :currentPresentation="currentPresentaion" v-if="currentPage === 'PRESENTATION'"></presentationDetails>
     `,
     methods: {
         openMovie(movie) {

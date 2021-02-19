@@ -10,4 +10,12 @@ export default class Reservation {
         this.seatX = seatX;
         this.seatZ = seatZ;
     }
+
+    toJSON() {
+        return {
+            "presentation": this.presentation.uuid,
+            "seatX": this.seatX,
+            "seatZ": this.seatZ
+        }
+    }
 }

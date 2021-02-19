@@ -3,12 +3,12 @@
 
 namespace APIHandlers;
 
-use Objects\Hall;
-use Objects\Reservation;
-
 require_once 'APIHandlerInterface.php';
 require_once 'APIHandler.php';
 require_once __DIR__ . '/../objects/Reservation.php';
+
+use Objects\Presentation;
+use Objects\Reservation;
 
 class ReservationHandler extends APIHandler {
 
@@ -47,18 +47,18 @@ class ReservationHandler extends APIHandler {
 
     private function handlePost($requestParts) {
         $data = json_decode(file_get_contents('php://input'), true)['data'];
-        $newHalls = array();
-        foreach ($data as $hallData) {
-            $uuid = uniqid("ha", true);
-            $hall = new Hall();
-            $hall->uuid = $uuid;
-            $hall->number = $hallData['number'];
-            $hall->seatsX = $hallData['seatsX'];
-            $hall->seatsZ = $hallData['seatsZ'];
-            $hall->save();
-            $newHalls[] = $hall;
+        $newReservations = array();
+        foreach ($data as $reservationData) {
+            $uuid = uniqid("res", true);
+            $reservation = new Reservation();
+            $reservation->uuid = $uuid;
+            $reservation->presentation = Presentation::fromDatabase($reservationData['presentation'], "");
+            $reservation->seatX = $reservationData['seatX'];
+            $reservation->seatZ = $reservationData['seatZ'];
+            $reservation->save();
+            $newReservations[] = $reservation;
         }
-        print json_encode(array('data' => $newHalls));
+        print json_encode(array('data' => $newReservations));
 
     }
 

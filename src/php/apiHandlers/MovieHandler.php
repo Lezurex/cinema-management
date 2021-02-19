@@ -6,10 +6,13 @@ namespace APIHandlers;
 require_once 'APIHandlerInterface.php';
 require_once 'APIHandler.php';
 require_once __DIR__ . '/../objects/Movie.php';
+require_once __DIR__ . '/../objects/Hall.php';
+
 
 use APIHandlers\APIHandlerInterface;
 use DateTime;
 use Objects\Hall;
+use Objects\Reservation;
 use Objects\Movie;
 use Objects\Presentation;
 

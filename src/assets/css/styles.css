@@ -60,6 +60,7 @@
     height: 100%;
     text-align: center;
     min-height: 3rem;
+    cursor: pointer;
 }
 
 .seat-occupied {

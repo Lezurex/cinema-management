@@ -53,7 +53,25 @@ class Reservation {
             return $array;
 
         }
-        return false;
+        return array();
+    }
+
+    public function save() {
+        $db = new DatabaseConnector();
+        $conn = $db->getConnection();
+
+        $sql = "INSERT INTO `reservations` (
+                    uuid,
+                    presentation,
+                    seatX,
+                    seatZ
+                           ) VALUES (
+                              '{$this->uuid}',
+                              '{$this->presentation->uuid}',
+                              '{$this->seatX}',
+                              '{$this->seatZ}'
+                          )";
+        $conn->query($sql);
     }
 
     #[ArrayShape(["uuid" => "string", "seatX" => "int", "seatZ" => "int"])] public function toArray(): array {
